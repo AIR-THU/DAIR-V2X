@@ -1,0 +1,4 @@
+[flake8]
+flake8-typing-imports==1.9.0
+max-line-length=200
+ignore = E402, F403, F405, E302, E241, F401, W292, W293, E902, W503

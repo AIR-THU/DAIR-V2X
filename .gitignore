@@ -1,0 +1,7 @@
+*/__pycache__
+*/*/__pycache__
+*/*/*/__pycache__
+/data/road-side
+/data/vehicle-side
+/cache
+*.pth
