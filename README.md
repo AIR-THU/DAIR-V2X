@@ -1,4 +1,4 @@
-# DAIR-V2X
+# OpenDAIRV2X
 ## Introduction
 To accelerate computer vision research and innovation for Vehicle-Infrastructure Cooperative Autonomous
 Driving (VICAD), we release DAIR-V2X Dataset, which is
@@ -14,7 +14,7 @@ we open source the OpenDAIRV2X, towards serving VICAD research community.
 ![image](resources/deployment-visual.png)
 
 ## News
-* [2022.07] We release the codebase v1.0.0.
+* [2022.07] We release the OpenDAIRV2X codebase v1.0.0.
   The current version can faciliate the researchers to use the DAIR-V2X dataset and reproduce the benchmarks.
 * [2022.03] Our Paper "DAIR-V2X: A Large-Scale Dataset for Vehicle-Infrastructure Cooperative 3D Object Detection" has been accepted by CVPR2022.
   Arxiv version could be seen [here](https://arxiv.org/abs/2204.05575).

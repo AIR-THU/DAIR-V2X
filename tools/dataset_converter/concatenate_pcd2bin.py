@@ -86,7 +86,7 @@ parser.add_argument(
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    path_c = argparse.source_root
+    path_c = args.source_root
     path_i2v = args.i2v_root
     path_dest = args.target_root
 
