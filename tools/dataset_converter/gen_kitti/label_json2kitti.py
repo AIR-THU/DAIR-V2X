@@ -19,7 +19,7 @@ def write_kitti_in_txt(my_json, path_txt):
         i9, i11, i10 = str(item["3d_dimensions"]["h"]), str(item["3d_dimensions"]["w"]), str(item["3d_dimensions"]["l"])
         i12, i13, i14 = str(item["3d_location"]["x"]), str(item["3d_location"]["y"]), str(item["3d_location"]["z"])
         # i15 = str(item["rotation"])
-        i15 = str(-item["rotation"])
+        i15 = str(-eval(item["rotation"]))
         item_list = [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15]
         item_string = " ".join(item_list) + "\n"
         wf.write(item_string)
