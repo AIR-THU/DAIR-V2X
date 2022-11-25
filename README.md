@@ -46,7 +46,7 @@ we open source the OpenDAIRV2X, towards serving VICAD research community.
   
   It will directly  support different modaility detectors including image-modality detector, pointcloud-modality detector and image-pointcloud fusion detector. 
   Now it supports image-modality detector ImvoxelNet, pointcloud-modality detector PointPillars.
-- [ ] Image-modality
+- [x] Image-modality
 - [x] Pointcloud-modality
 - [ ] Multi-modality
 
@@ -66,9 +66,9 @@ VIC3D Benchmark is as following:
 | Modality  | Fusion  | Model      | Dataset   | AP-3D (IoU=0.5)  |        |        |         | AP-BEV (IoU=0.5)  |       |        |         |   AB   |
 | :-------: | :-----: | :--------: | :-------: | :----: | :----: | :----: | :-----: | :-----: | :---: | :----: | :-----: | :----: |
 |           |         |            |           | Overall | 0-30m | 30-50m | 50-100m | Overall | 0-30m | 30-50m | 50-100m |        |
-| Image     | VehOnly | ImvoxelNet | VIC-Sync  |    |  |    |     |    |  |    |     |       |                    
-|           | InfOnly | ImvoxelNet | VIC-Sync  |    |  |   |    |    |  |   |    |  |  
-|       | Late-Fusion | ImvoxelNet | VIC-Sync  |    |  |   |     |    |  |   |    |  |                    
+| Image     | VehOnly | ImvoxelNet | VIC-Sync  |    9.13   | 19.06         | 5.23  | 0.41   | 10.96   | 21.93           | 7.28  | 0.78   | 0     |                    
+|           | InfOnly | ImvoxelNet | VIC-Sync  |  14.02   | 20.56         | 8.89  | 10.57   | 22.10   | 27.33           | 17.45  | 18.92   | 309.38 |  
+|       | Late-Fusion | ImvoxelNet | VIC-Sync  |   18.77   | 33.47         | 9.43  | 8.62    | 24.85   | 39.49           | 14.68  | 14.96   | 309.38|                    
 |Pointcloud | VehOnly | PointPillars | VIC-Sync | 48.06  | 47.62 | 63.51  | 44.37   | 52.24   | 30.55 | 66.03  |  48.36  | 0      | 
 |           | InfOnly | PointPillars | VIC-Sync | 17.58  | 23.00 | 13.96  | 9.17    | 27.26   | 29.07 | 23.92  | 26.64   | 478.61      |        
 |  | Early Fusion | PointPillars | VIC-Sync    | 62.61                    | 64.82                  | 68.68                   | 56.57                    | 68.91                     | 68.92                   | 73.64                    | 65.66                     | 1382275.75 |

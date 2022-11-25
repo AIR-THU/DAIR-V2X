@@ -163,8 +163,9 @@ class LateFusionInf(nn.Module):
         self.pipe.send("boxes", pred_dict["boxes_3d"])
         self.pipe.send("score", pred_dict["scores_3d"])
         self.pipe.send("label", pred_dict["labels_3d"])
+
         if prev_inf_frame_func is not None:
-            prev_frame, delta_t = prev_inf_frame_func(id)
+            prev_frame, delta_t = prev_inf_frame_func(id, sensortype=self.args.sensortype)
             if prev_frame is not None:
                 prev_frame_trans = prev_frame.transform(from_coord="Infrastructure_lidar", to_coord="Vehicle_lidar")
                 prev_frame_trans.veh_name = trans.veh_name
@@ -210,7 +211,7 @@ class LateFusionVeh(nn.Module):
         elif self.args.sensortype == "camera":
             id = frame.id["camera"]
             logger.debug("vehicle image_id: {}".format(id))
-            path = osp.join(self.args.output, "veh", "image", id + ".pkl")
+            path = osp.join(self.args.output, "veh", "camera", id + ".pkl")
             frame_timestamp = frame["image_timestamp"]
 
         if osp.exists(path) and not self.args.overwrite_cache:
