@@ -14,6 +14,7 @@ we open source the OpenDAIRV2X, towards serving VICAD research community.
 ![image](resources/deployment-visual.png)
 
 ## News
+* [2022.11] 🔥 We are running the first [VIC3D Object Detection challenge](https://aistudio.baidu.com/aistudio/competition/detail/522/0/introduction). 
 * [2022.07] We release the OpenDAIRV2X codebase v1.0.0.
   The current version can faciliate the researchers to use the DAIR-V2X dataset and reproduce the benchmarks.
 * [2022.03] Our Paper "DAIR-V2X: A Large-Scale Dataset for Vehicle-Infrastructure Cooperative 3D Object Detection" has been accepted by CVPR2022.
