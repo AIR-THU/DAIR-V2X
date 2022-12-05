@@ -12,7 +12,7 @@ We implement ImVoxelNet and provide the results and checkpoints on DAIR-V2X-V da
 | Modality |   Model   |  Car  |        |      | Pedestrain |        |      | Cyclist |        |      |                                          Download                                          |
 | :--------: | :----------: | :-----: | :------: | :-----: | :----------: | :------: | :----: | :-------: | :------: | :----: | :-------------------------------------------------------------------------------------------: |
 |          |            | Easy | Middle | Hard |    Easy    | Middle | Hard |  Easy  | Middle | Hard |                                                                                            |
-|  Image  | ImVoxelNet | 38.37 | 24.28 | 21.54 |    4.54    |  4.54  | 4.54 |  10.38  |  9.09  | 9.09 | [model](https://drive.google.com/file/d/1tY35TxyIpANhY6J8zyuvJrboDTaSm52m/view?usp=sharing) |
+|  Image  | ImVoxelNet | 56.86 | 39.74 | 33.00 |    9.09    |  9.09  | 9.09 |  10.48  |  9.09  | 9.09 | [model](https://drive.google.com/file/d/1HimYmBKhpnpU14UdKLykQJQrkSBDKGyf/view?usp=share_link) |
 
 ## Training & Evaluation
 
