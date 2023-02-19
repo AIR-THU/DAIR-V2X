@@ -132,9 +132,12 @@ class VICDataset(DAIRV2XDataset):
             sensortype,
         )
 
-        frame_pairs = load_json(osp.join(path, "cooperative/data_info.json"))
-        split_path = args.split_data_path
-        frame_pairs = self.get_split(split_path, split, frame_pairs)
+        if args.model =='feature_flow':
+            frame_pairs = load_json('/home/yuhaibao/FFNet-VIC3D/data/dair-v2x/flow_data_jsons/example_flow_data_info_val_1.json')
+        else:
+            frame_pairs = load_json(osp.join(path, "cooperative/data_info.json"))
+            self.split = self.get_split(path + "/cooperative", split)
+            frame_pairs = [frame_pairs[i] for i in self.split]
 
         self.data = []
         self.inf_frames = {}

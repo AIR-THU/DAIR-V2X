@@ -129,6 +129,16 @@ class Coord_transformation(object):
                 return rotation, translation
         else:
             raise ("error: wrong coordinate name")
+        
+    def get_rot_trans(self):
+        path_all = {
+            "path_root": self.path_root,
+            "path_lidar2world": "infrastructure-side/calib/virtuallidar_to_world/" + self.infra_name + ".json",
+            "path_lidar2novatel": "vehicle-side/calib/lidar_to_novatel/" + self.veh_name + ".json",
+            "path_novatel2world": "vehicle-side/calib/novatel_to_world/" + self.veh_name + ".json",
+        }
+        
+        return self.forward(self.from_coord, self.to_coord, path_all)
 
     def rev_matrix(self, R):
         R = np.matrix(R)
