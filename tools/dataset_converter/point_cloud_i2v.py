@@ -7,6 +7,8 @@ import open3d as o3d
 from tqdm import tqdm
 import errno
 
+from concurrent import futures as futures
+
 
 def read_json(path_json):
     with open(path_json, "r") as load_f:
@@ -56,10 +58,10 @@ def get_data(data_info, path_pcd):
 
 
 def trans(input_point, translation, rotation):
-    input_point = np.array(input_point).reshape(3, 1)
+    input_point = np.array(input_point).reshape(3, -1)
     translation = np.array(translation).reshape(3, 1)
     rotation = np.array(rotation).reshape(3, 3)
-    output_point = np.dot(rotation, input_point).reshape(3, 1) + np.array(translation).reshape(3, 1)
+    output_point = np.dot(rotation, input_point).reshape(3, -1) + np.array(translation).reshape(3, 1)
     return output_point
 
 
@@ -102,8 +104,7 @@ def trans_point_i2v(input_point, path_virtuallidar2world, path_novatel2world, pa
     print('new_translation, new_rotation:', new_translation, new_rotation)
     print('3:', point)
     """
-    point = point.reshape(1, 3).tolist()
-    point = point[0]
+    point = point.T
 
     return point
 
@@ -111,7 +112,6 @@ def trans_point_i2v(input_point, path_virtuallidar2world, path_novatel2world, pa
 def read_pcd(path_pcd):
     pointpillar = o3d.io.read_point_cloud(path_pcd)
     points = np.asarray(pointpillar.points)
-    points = points.tolist()
     return points
 
 
@@ -122,22 +122,36 @@ def show_pcd(path_pcd):
 
 def write_pcd(path_pcd, new_points, path_save):
     pc = pypcd.PointCloud.from_path(path_pcd)
-    pc.pc_data["x"] = np.array([a[0] for a in new_points])
-    pc.pc_data["y"] = np.array([a[1] for a in new_points])
-    pc.pc_data["z"] = np.array([a[2] for a in new_points])
+    pc.pc_data["x"] = new_points[:, 0]
+    pc.pc_data["y"] = new_points[:, 1]
+    pc.pc_data["z"] = new_points[:, 2]
     pc.save_pcd(path_save, compression="binary_compressed")
 
 
 def trans_pcd_i2v(path_pcd, path_virtuallidar2world, path_novatel2world, path_lidar2novatel, path_save):
+    # (n, 3)
     points = read_pcd(path_pcd)
-    new_points = []
-    for point in tqdm(points):
-        point = trans_point_i2v(point, path_virtuallidar2world, path_novatel2world, path_lidar2novatel)
-        new_points.append(point)
+    # (n, 3)
+    new_points = trans_point_i2v(points.T, path_virtuallidar2world, path_novatel2world, path_lidar2novatel)
     write_pcd(path_pcd, new_points, path_save)
 
-
-def get_i2v(path_c, path_dest):
+    
+def map_func(data, path_c, path_dest, i_data_info, v_data_info):
+    path_pcd_i = os.path.join(path_c, data["infrastructure_pointcloud_path"])
+    path_pcd_v = os.path.join(path_c, data["vehicle_pointcloud_path"])
+    i_data = get_data(i_data_info, path_pcd_i)
+    v_data = get_data(v_data_info, path_pcd_v)
+    path_virtuallidar2world = os.path.join(
+        path_c, "infrastructure-side", i_data["calib_virtuallidar_to_world_path"]
+    )
+    path_novatel2world = os.path.join(path_c, "vehicle-side", v_data["calib_novatel_to_world_path"])
+    path_lidar2novatel = os.path.join(path_c, "vehicle-side", v_data["calib_lidar_to_novatel_path"])
+    name = os.path.split(path_pcd_i)[-1]
+    path_save = os.path.join(path_dest, name)
+    trans_pcd_i2v(path_pcd_i, path_virtuallidar2world, path_novatel2world, path_lidar2novatel, path_save)
+    
+    
+def get_i2v(path_c, path_dest, num_worker):
     mkdir_p(path_dest)
     path_c_data_info = os.path.join(path_c, "cooperative/data_info.json")
     path_i_data_info = os.path.join(path_c, "infrastructure-side/data_info.json")
@@ -145,23 +159,15 @@ def get_i2v(path_c, path_dest):
     c_data_info = read_json(path_c_data_info)
     i_data_info = read_json(path_i_data_info)
     v_data_info = read_json(path_v_data_info)
+    
+    total = len(c_data_info)
+    with tqdm(total=total) as pbar:
+        with futures.ProcessPoolExecutor(num_worker) as executor:
+            res = [executor.submit(map_func, data, path_c, path_dest, i_data_info, v_data_info) for data in c_data_info]
+            for _ in futures.as_completed(res):
+                pbar.update(1)
 
-    # for data in tqdm(c_data_info):
-    for data in tqdm(c_data_info):
-        path_pcd_i = os.path.join(path_c, data["infrastructure_pointcloud_path"])
-        path_pcd_v = os.path.join(path_c, data["vehicle_pointcloud_path"])
-        i_data = get_data(i_data_info, path_pcd_i)
-        v_data = get_data(v_data_info, path_pcd_v)
-        path_virtuallidar2world = os.path.join(
-            path_c, "infrastructure-side", i_data["calib_virtuallidar_to_world_path"]
-        )
-        path_novatel2world = os.path.join(path_c, "vehicle-side", v_data["calib_novatel_to_world_path"])
-        path_lidar2novatel = os.path.join(path_c, "vehicle-side", v_data["calib_lidar_to_novatel_path"])
-        name = os.path.split(path_pcd_i)[-1]
-        path_save = os.path.join(path_dest, name)
-        trans_pcd_i2v(path_pcd_i, path_virtuallidar2world, path_novatel2world, path_lidar2novatel, path_save)
-
-
+                
 parser = argparse.ArgumentParser("Convert The Point Cloud from Infrastructure to Ego-vehicle")
 parser.add_argument(
     "--source-root",
@@ -175,10 +181,18 @@ parser.add_argument(
     default="./data/DAIR-V2X/cooperative-vehicle-infrastructure/vic3d-early-fusion/velodyne/lidar_i2v",
     help="The data root where the data with ego-vehicle coordinate is generated",
 )
+parser.add_argument(
+    "--num-worker",
+    type=int,
+    default=1,
+    help="Number of workers for multi-processing",
+)
 
 if __name__ == "__main__":
     args = parser.parse_args()
     source_root = args.source_root
     target_root = args.target_root
+    num_worker = args.num_worker
 
-    get_i2v(source_root, target_root)
+    get_i2v(source_root, target_root, num_worker)
+
