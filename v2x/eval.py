@@ -91,6 +91,7 @@ if __name__ == "__main__":
         split=args.split,
         sensortype=args.sensortype,
         extended_range=extended_range,
+        val_data_path=args.val_data_path
     )
 
     logger.info("loading evaluator")
@@ -103,4 +104,8 @@ if __name__ == "__main__":
     else:
         pipe = Channel()
         model = SUPPROTED_MODELS[args.model](args, pipe)
+        ### Patch for FFNet evaluation ###
+        if args.model =='feature_flow':
+            model.model.data_root = args.input
+        #############################
         eval_vic(args, dataset, model, evaluator)

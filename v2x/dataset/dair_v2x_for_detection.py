@@ -118,7 +118,7 @@ class DAIRV2XV(DAIRV2XDataset):
 
 
 class VICDataset(DAIRV2XDataset):
-    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None):
+    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None, val_data_path=""):
         super().__init__(path + "/cooperative", args, split, extended_range)
         self.path = path
         self.inf_path2info = build_path_to_info(
@@ -132,8 +132,9 @@ class VICDataset(DAIRV2XDataset):
             sensortype,
         )
 
+        ### Patch for FFNet evaluation ###
         if args.model =='feature_flow':
-            frame_pairs = load_json('/home/yuhaibao/FFNet-VIC3D/data/dair-v2x/flow_data_jsons/example_flow_data_info_val_1.json')
+            frame_pairs = load_json(val_data_path)
         else:
             frame_pairs = load_json(osp.join(path, "cooperative/data_info.json"))
             split_path = args.split_data_path
@@ -214,8 +215,8 @@ class VICDataset(DAIRV2XDataset):
 
 
 class VICSyncDataset(VICDataset):
-    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None):
-        super().__init__(path, args, split, sensortype, extended_range)
+    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None, val_data_path=""):
+        super().__init__(path, args, split, sensortype, extended_range, val_data_path)
         logger.info("VIC-Sync {} dataset, overall {} frames".format(split, len(self.data)))
 
     def __getitem__(self, index):
