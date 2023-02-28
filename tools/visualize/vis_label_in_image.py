@@ -22,7 +22,7 @@ def vis_label_in_image(path, save_path):
             )  # extrinsic of lidar_to_camera
         else:
             # visualize vehicle-side image
-            label_path = osp.join(path, data_info["label_lidar_std_path"])
+            label_path = osp.join(path, data_info["label_camera_std_path"])
             lidar2cam_path = osp.join(path, data_info["calib_lidar_to_camera_path"])  # extrinsic of lidar_to_camera
 
         labels = []
