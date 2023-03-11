@@ -88,10 +88,9 @@ class EarlyFusion(BaseModel):
         mkdir(osp.join(args.output, "result"))
 
     def forward(self, vic_frame, filt, prev_inf_frame_func=None, *args):
-        save_path = osp.join(vic_frame.path, "vehicle-side", "cache")
-        if not osp.exists(save_path):
-            mkdir(save_path)
-        name = vic_frame.veh_frame["image_path"][-10:-4]
+        save_path = "../early_fusion_point_cloud/velodyne"
+        mkdir(save_path)
+        name = vic_frame.veh_frame.id["camera"]
         Inf_points = read_pcd(osp.join(vic_frame.path, "infrastructure-side", vic_frame.inf_frame["pointcloud_path"]))
         Veh_points = read_pcd(osp.join(vic_frame.path, "vehicle-side", vic_frame.veh_frame["pointcloud_path"]))
         vic_frame_trans = vic_frame.transform(from_coord="Infrastructure_lidar", to_coord="Vehicle_lidar")
@@ -103,7 +102,7 @@ class EarlyFusion(BaseModel):
                 Inf_points.pc_data[i][j] = temp[j]
             Inf_points.pc_data[i][3] = Inf_points.pc_data[i][3] * 255
         concatenate_pcd2bin(Inf_points, Veh_points, osp.join(save_path, name + ".pcd"))
-        vic_frame.veh_frame["pointcloud_path"] = osp.join("cache", name + ".pcd")
+        # vic_frame.veh_frame["pointcloud_path"] = osp.join("cache", name + ".pcd")
         pred, id_veh = self.model(vic_frame.vehicle_frame(), None, filt)
 
         # Hard Code to change the prediction label
@@ -143,7 +142,7 @@ class LateFusionVeh(nn.Module):
             if self.model is None:
                 raise Exception
 
-            tmp = frame.point_cloud(data_format="file")
+            tmp = frame.early_fusion_tmp_point_cloud(data_format="file")
             result, _ = inference_detector(self.model, tmp)
             box, box_ry, box_center, arrow_ends = get_box_info(result)
             if trans is not None:
@@ -167,8 +166,8 @@ class LateFusionVeh(nn.Module):
                 box = np.zeros((1, 8, 3))
                 box_center = np.zeros((1, 1, 3))
                 arrow_ends = np.zeros((1, 1, 3))
-                result[0]["labels_3d"] = np.zeros((1))
-                result[0]["scores_3d"] = np.zeros((1))
+                result[0]["labels_3d"] = np.zeros(1)
+                result[0]["scores_3d"] = np.zeros(1)
 
             if self.args.save_point_cloud:
                 save_data = frame.point_cloud(format="array")

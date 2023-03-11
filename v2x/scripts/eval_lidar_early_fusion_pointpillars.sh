@@ -18,7 +18,7 @@ python eval.py \
   --input $DATA \
   --output $OUTPUT \
   --model $FUSION_METHOD \
-  --dataset vic-async \
+  --dataset vic-async-v2 \
   --k $DELAY_K \
   --split val \
   --split-data-path $SPLIT_DATA_PATH \

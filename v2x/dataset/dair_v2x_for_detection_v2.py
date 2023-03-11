@@ -4,23 +4,19 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from base_dataset import DAIRV2XDataset, get_annos, build_path_to_info
-from dataset.dataset_utils import load_json, InfFrame, VehFrame, VICFrame, Label
+from base_dataset import DAIRV2XDataset, get_annos, build_frame_to_info
+from dataset.dataset_utils import load_json, InfFrameV2, VehFrameV2, VICFrameV2, Label
 from v2x_utils import Filter, RectFilter, id_cmp, id_to_str, get_trans, box_translation
 
 
-class DAIRV2XI(DAIRV2XDataset):
+class DAIRV2XIV2(DAIRV2XDataset):
     def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None):
         super().__init__(path, args, split, extended_range)
         data_infos = load_json(osp.join(path, "infrastructure-side/data_info.json"))
         split_path = args.split_data_path
         data_infos = self.get_split(split_path, split, data_infos)
 
-        self.inf_path2info = build_path_to_info(
-            "",
-            load_json(osp.join(path, "infrastructure-side/data_info.json")),
-            sensortype,
-        )
+        self.inf_frame2info = build_frame_to_info(load_json(osp.join(path, "infrastructure-side/data_info.json")))
 
         self.data = []
         for elem in data_infos:
@@ -29,10 +25,10 @@ class DAIRV2XI(DAIRV2XDataset):
             gt_label["camera"] = Label(osp.join(path, "infrastructure-side", elem["label_camera_std_path"]), filt)
             gt_label["lidar"] = Label(osp.join(path, "infrastructure-side", elem["label_lidar_std_path"]), filt)
 
-            self.data.append((InfFrame(path, elem), gt_label, filt))
+            self.data.append((InfFrameV2(path, elem), gt_label, filt))
 
             if sensortype == "camera":
-                inf_frame = self.inf_path2info[elem["image_path"]]
+                inf_frame = self.inf_frame2info[elem["frame_id"]]
                 get_annos(path + "/infrastructure-side", "", inf_frame, "camera")
 
     def get_split(self, split_path, split, data_infos):
@@ -43,14 +39,14 @@ class DAIRV2XI(DAIRV2XDataset):
             raise Exception
 
         if split in ["train", "val", "test"]:
-            split_data = split_data[split]
+            split_data = split_data["infrastructure_split"][split]
         else:
             print("Split Method Doesn't Exists!")
             raise Exception
 
         frame_pairs_split = []
         for data_info in data_infos:
-            frame_idx = data_info["image_path"].split("/")[-1].replace(".jpg", "")
+            frame_idx = data_info["frame_id"]
             if frame_idx in split_data:
                 frame_pairs_split.append(data_info)
 
@@ -63,18 +59,14 @@ class DAIRV2XI(DAIRV2XDataset):
         return len(self.data)
 
 
-class DAIRV2XV(DAIRV2XDataset):
+class DAIRV2XVV2(DAIRV2XDataset):
     def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None):
         super().__init__(path, args, split, extended_range)
         data_infos = load_json(osp.join(path, "vehicle-side/data_info.json"))
         split_path = args.split_data_path
         data_infos = self.get_split(split_path, split, data_infos)
 
-        self.veh_path2info = build_path_to_info(
-            "",
-            load_json(osp.join(path, "vehicle-side/data_info.json")),
-            sensortype,
-        )
+        self.veh_frame2info = build_frame_to_info(load_json(osp.join(path, "vehicle-side/data_info.json")))
 
         self.data = []
         for elem in data_infos:
@@ -83,10 +75,10 @@ class DAIRV2XV(DAIRV2XDataset):
             for view in ["camera", "lidar"]:
                 gt_label[view] = Label(osp.join(path, "vehicle-side", elem["label_" + view + "_std_path"]), filt)
 
-            self.data.append((VehFrame(path, elem), gt_label, filt))
+            self.data.append((VehFrameV2(path, elem), gt_label, filt))
 
             if sensortype == "camera":
-                veh_frame = self.veh_path2info[elem["image_path"]]
+                veh_frame = self.veh_frame2info[elem["frame_id"]]
                 get_annos(path + "/vehicle-side", "", veh_frame, "camera")
 
     def get_split(self, split_path, split, data_infos):
@@ -97,14 +89,14 @@ class DAIRV2XV(DAIRV2XDataset):
             raise Exception
 
         if split in ["train", "val", "test"]:
-            split_data = split_data[split]
+            split_data = split_data["vehicle_split"][split]
         else:
             print("Split Method Doesn't Exists!")
             raise Exception
 
         frame_pairs_split = []
         for data_info in data_infos:
-            frame_idx = data_info["image_path"].split("/")[-1].replace(".jpg", "")
+            frame_idx = data_info["frame_id"]
             if frame_idx in split_data:
                 frame_pairs_split.append(data_info)
 
@@ -117,20 +109,12 @@ class DAIRV2XV(DAIRV2XDataset):
         return len(self.data)
 
 
-class VICDataset(DAIRV2XDataset):
+class VICDatasetV2(DAIRV2XDataset):
     def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None, val_data_path=""):
         super().__init__(path + "/cooperative", args, split, extended_range)
         self.path = path
-        self.inf_path2info = build_path_to_info(
-            "infrastructure-side",
-            load_json(osp.join(path, "infrastructure-side/data_info.json")),
-            sensortype,
-        )
-        self.veh_path2info = build_path_to_info(
-            "vehicle-side",
-            load_json(osp.join(path, "vehicle-side/data_info.json")),
-            sensortype,
-        )
+        self.inf_frame2info = build_frame_to_info(load_json(osp.join(path, "infrastructure-side/data_info.json")))
+        self.veh_frame2info = build_frame_to_info(load_json(osp.join(path, "vehicle-side/data_info.json")))
 
         ### Patch for FFNet evaluation ###
         if args.model =='feature_flow':
@@ -146,34 +130,33 @@ class VICDataset(DAIRV2XDataset):
 
         for elem in frame_pairs:
             if sensortype == "lidar":
-                inf_frame = self.inf_path2info[elem["infrastructure_pointcloud_path"]]
-                veh_frame = self.veh_path2info[elem["vehicle_pointcloud_path"]]
+                inf_frame = self.inf_frame2info[elem["infrastructure_frame"]]
+                veh_frame = self.veh_frame2info[elem["vehicle_frame"]]
             elif sensortype == "camera":
-                inf_frame = self.inf_path2info[elem["infrastructure_image_path"]]
-                veh_frame = self.veh_path2info[elem["vehicle_image_path"]]
+                inf_frame = self.inf_frame2info[elem["infrastructure_frame"]]
+                veh_frame = self.veh_frame2info[elem["vehicle_frame"]]
                 get_annos(path, "infrastructure-side", inf_frame, "camera")
                 get_annos(path, "vehicle-side", veh_frame, "camera")
 
-            inf_frame = InfFrame(path + "/infrastructure-side/", inf_frame)
-            veh_frame = VehFrame(path + "/vehicle-side/", veh_frame)
-            if not inf_frame["batch_id"] in self.inf_frames:
-                self.inf_frames[inf_frame["batch_id"]] = [inf_frame]
+            inf_frame = InfFrameV2(path + "/infrastructure-side/", inf_frame)
+            veh_frame = VehFrameV2(path + "/vehicle-side/", veh_frame)
+            if not inf_frame["sequence_id"] in self.inf_frames:
+                self.inf_frames[inf_frame["sequence_id"]] = [inf_frame]
             else:
-                self.inf_frames[inf_frame["batch_id"]].append(inf_frame)
-            if not veh_frame["batch_id"] in self.veh_frames:
-                self.veh_frames[veh_frame["batch_id"]] = [veh_frame]
+                self.inf_frames[inf_frame["sequence_id"]].append(inf_frame)
+            if not veh_frame["sequence_id"] in self.veh_frames:
+                self.veh_frames[veh_frame["sequence_id"]] = [veh_frame]
             else:
-                self.veh_frames[veh_frame["batch_id"]].append(veh_frame)
-            vic_frame = VICFrame(path, elem, veh_frame, inf_frame, 0)
+                self.veh_frames[veh_frame["sequence_id"]].append(veh_frame)
+            vic_frame = VICFrameV2(
+                path, elem, veh_frame, inf_frame, 0, elem["system_error_offset"]["delta_x"], elem["system_error_offset"]["delta_y"]
+            )
 
-            # filter in world coordinate
-            if extended_range is not None:
-                trans = vic_frame.transform(from_coord="Vehicle_lidar", to_coord="World")
-                filt_world = RectFilter(trans(extended_range)[0])
+            # filter in vehicle-side coordinate
+            filt_veh = RectFilter(extended_range[0]) if extended_range is not None else Filter()
 
-            trans_1 = vic_frame.transform("World", "Vehicle_lidar")
-            label_v = Label(osp.join(path, elem["cooperative_label_path"]), filt_world)
-            label_v["boxes_3d"] = trans_1(label_v["boxes_3d"])
+            coop_label_path = "cooperative/label/" + elem["vehicle_frame"] + ".json"
+            label_v = Label(osp.join(path, coop_label_path), filt_veh)
             filt = RectFilter(extended_range[0])
             tup = (
                 vic_frame,
@@ -183,12 +166,12 @@ class VICDataset(DAIRV2XDataset):
             self.data.append(tup)
 
     def query_veh_segment(self, frame, sensortype="lidar", previous_only=False):
-        segment = self.veh_frames[frame.batch_id]
-        return [f for f in segment if f.id[sensortype] < frame.id[sensortype] or not previous_only]
+        segment = self.veh_frames[frame.sequence_id]
+        return [f for f in segment if f["frame_id"] < frame["frame_id"] or not previous_only]
 
     def query_inf_segment(self, frame, sensortype="lidar", previous_only=False):
-        segment = self.inf_frames[frame.batch_id]
-        return [f for f in segment if f.id[sensortype] < frame.id[sensortype] or not previous_only]
+        segment = self.inf_frames[frame.sequence_id]
+        return [f for f in segment if f["frame_id"] < frame["frame_id"] or not previous_only]
 
     def get_split(self, split_path, split, frame_pairs):
         if osp.exists(split_path):
@@ -205,7 +188,7 @@ class VICDataset(DAIRV2XDataset):
 
         frame_pairs_split = []
         for frame_pair in frame_pairs:
-            veh_frame_idx = frame_pair["vehicle_image_path"].split("/")[-1].replace(".jpg", "")
+            veh_frame_idx = frame_pair["vehicle_frame"]
             if veh_frame_idx in split_data:
                 frame_pairs_split.append(frame_pair)
         return frame_pairs_split
@@ -214,7 +197,7 @@ class VICDataset(DAIRV2XDataset):
         raise NotImplementedError
 
 
-class VICSyncDataset(VICDataset):
+class VICSyncDatasetV2(VICDatasetV2):
     def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None, val_data_path=""):
         super().__init__(path, args, split, sensortype, extended_range, val_data_path)
         logger.info("VIC-Sync {} dataset, overall {} frames".format(split, len(self.data)))
@@ -226,9 +209,9 @@ class VICSyncDataset(VICDataset):
         return len(self.data)
 
 
-class VICAsyncDataset(VICDataset):
-    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None):
-        super().__init__(path, args, split, sensortype, extended_range)
+class VICAsyncDatasetV2(VICDatasetV2):
+    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None, val_data_path=""):
+        super().__init__(path, args, split, sensortype, extended_range, val_data_path)
         self.k = args.k
         self.async_data = []
         for vic_frame, coop_labels, filt in self.data:
@@ -239,7 +222,7 @@ class VICAsyncDataset(VICDataset):
             if inf_frame is None:
                 continue
             else:
-                new_vic_frame = VICFrame(path, {}, vic_frame.veh_frame, inf_frame, delta_t, vic_frame.offset)
+                new_vic_frame = VICFrameV2(path, {}, vic_frame.veh_frame, inf_frame, delta_t, vic_frame.delta_x, vic_frame.delta_y)
                 self.async_data.append((new_vic_frame, coop_labels, filt))
 
         logger.info("VIC-Async {} dataset, overall {} frames".format(split, len(self.async_data)))
@@ -252,25 +235,25 @@ class VICAsyncDataset(VICDataset):
 
     def prev_inf_frame(self, index, sensortype="lidar"):
         if sensortype == "lidar":
-            cur = self.inf_path2info["infrastructure-side/velodyne/" + index + ".pcd"]
+            cur = self.inf_frame2info[index]
             if (
-                int(index) - self.k < int(cur["batch_start_id"])
-                or "infrastructure-side/velodyne/" + id_to_str(int(index) - self.k) + ".pcd" not in self.inf_path2info
+                int(index) - self.k < int(cur["valid_frames_splits"][0]["start_frame_id"])
+                or id_to_str(int(index) - self.k) not in self.inf_frame2info.keys()
             ):
                 return None, None
-            prev = self.inf_path2info["infrastructure-side/velodyne/" + id_to_str(int(index) - self.k) + ".pcd"]
+            prev = self.inf_frame2info[id_to_str(int(index) - self.k)]
             return (
-                InfFrame(self.path + "/infrastructure-side/", prev),
+                InfFrameV2(self.path + "/infrastructure-side/", prev),
                 (int(cur["pointcloud_timestamp"]) - int(prev["pointcloud_timestamp"])) / 1000.0,
             )
         elif sensortype == "camera":
-            cur = self.inf_path2info["infrastructure-side/image/" + index + ".jpg"]
-            if int(index) - self.k < int(cur["batch_start_id"]):
+            cur = self.inf_frame2info[index]
+            if int(index) - self.k < int(cur["valid_frames_splits"][0]["start_frame_id"]):
                 return None, None
-            prev = self.inf_path2info["infrastructure-side/image/" + id_to_str(int(index) - self.k) + ".jpg"]
+            prev = self.inf_frame2info[id_to_str(int(index) - self.k)]
             get_annos(self.path, "infrastructure-side", prev, "camera")
             return (
-                InfFrame(self.path + "/infrastructure-side/", prev),
+                InfFrameV2(self.path + "/infrastructure-side/", prev),
                 (int(cur["image_timestamp"]) - int(prev["image_timestamp"])) / 1000.0,
             )
 

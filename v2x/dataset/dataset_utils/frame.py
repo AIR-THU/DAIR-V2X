@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 import torch
 
 from dataset.dataset_utils import read_pcd, read_jpg, load_json
-from v2x_utils.transformation_utils import Coord_transformation
+from v2x_utils.transformation_utils import Coord_transformation, Coord_transformation_v2
 from v2x_utils import get_trans, box_translation
 import json
 import numpy as np
@@ -151,4 +151,145 @@ class VICFrame(Frame):
         veh_name = self.veh_frame["image_path"][-10:-4]
         infra_name = self.inf_frame["image_path"][-10:-4]
         trans = Coord_transformation(from_coord, to_coord, self.path, infra_name, veh_name)
+        return trans
+
+
+class VehFrameV2(Frame):
+    def __init__(self, path, veh_dict, tmp_key="tmps", delta_x=0, delta_y=0):
+        super().__init__(path, veh_dict)
+        self.id = {}
+        self.id["lidar"] = veh_dict["frame_id"]
+        self.id["camera"] = veh_dict["frame_id"]
+        self.tmp = "../cache/" + tmp_key + "/tmp_v_" + self.get("frame_id") + ".bin"
+        self.delta_x = delta_x
+        self.delta_y = delta_y
+        if not osp.exists("../cache/" + tmp_key):
+            os.system("mkdir -p ../cache/" + tmp_key)
+
+    def point_cloud(self, data_format="array"):
+        points, _ = read_pcd(osp.join(self.path, self.get("pointcloud_path")))
+        if data_format == "array":
+            return points, _
+        elif data_format == "file":
+            if not osp.exists(self.tmp):
+                points.tofile(self.tmp)
+            return self.tmp
+        elif data_format == "tensor":
+            return torch.tensor(points)
+
+    def early_fusion_tmp_point_cloud(self, data_format="array"):
+        points, _ = read_pcd(osp.join("../early_fusion_point_cloud", self.get("pointcloud_path")))
+        if data_format == "array":
+            return points, _
+        elif data_format == "file":
+            if not osp.exists(self.tmp):
+                points.tofile(self.tmp)
+            return self.tmp
+        elif data_format == "tensor":
+            return torch.tensor(points)
+
+    def image(self, data_format="rgb"):
+        image_array = read_jpg(osp.join(self.path, self.get("image_path")))
+        if data_format == "array":
+            return image_array
+        elif data_format == "file":
+            if not osp.exists(self.tmp):
+                image_array.tofile(self.tmp)
+            return self.tmp
+        elif data_format == "tensor":
+            return torch.tensor(image_array)
+
+
+class InfFrameV2(Frame):
+    def __init__(self, path, inf_dict, tmp_key="tmps", delta_x=0, delta_y=0):
+        super().__init__(path, inf_dict)
+        self.id = {}
+        self.id["lidar"] = inf_dict["frame_id"]
+        self.id["camera"] = inf_dict["frame_id"]
+        self.tmp = "../cache/" + tmp_key + "/tmp_i_" + self.get("frame_id") + ".bin"
+        self.delta_x = delta_x
+        self.delta_y = delta_y
+        if not osp.exists("../cache/" + tmp_key):
+            os.system("mkdir ../cache/" + tmp_key)
+
+    def point_cloud(self, data_format="array"):
+        points, _ = read_pcd(osp.join(self.path, self.get("pointcloud_path")))
+        if data_format == "array":
+            return points, _
+        elif data_format == "file":
+            if not osp.exists(self.tmp):
+                points.tofile(self.tmp)
+            return self.tmp
+        elif data_format == "tensor":
+            return torch.tensor(points)
+
+    def image(self, data_format="rgb"):
+        image_array = read_jpg(osp.join(self.path, self.get("image_path")))
+        if data_format == "array":
+            return image_array
+        elif data_format == "file":
+            if not osp.exists(self.tmp):
+                image_array.copy(self.tmp)
+            return self.tmp
+        elif data_format == "tensor":
+            return torch.tensor(image_array)
+
+    def transform(self, from_coord="", to_coord=""):
+        """
+        This function serves to calculate the Transformation Matrix from 'from_coord' to 'to_coord'
+        coord_list=['Infrastructure_image','Infrastructure_camera','Infrastructure_lidar',
+                       'world', 'Vehicle_image','Vehicle_camera','Vehicle_lidar',
+                       'Vehicle_novatel']
+        Args:
+            from_coord(str): element in the coord_list
+            to_coord(str):  element in coord_list
+        Return:
+            Transformation_Matrix: Transformation Matrix from 'from_coord' to 'to_coord'
+        """
+        inf_name = self.get("frame_id")
+        trans = Coord_transformation_v2(from_coord, to_coord, "/".join(self.path.split("/")[:-2]), inf_name, "", self.delta_x, self.delta_y)
+        return trans
+
+
+class VICFrameV2(Frame):
+    def __init__(self, path, coop_dict, veh_frame_info, inf_frame_info, time_diff, delta_x=0, delta_y=0):
+        # TODO: build vehicle frame and infrastructure frame
+        super().__init__(path, coop_dict)
+        self.veh_frame = veh_frame_info
+        self.inf_frame = inf_frame_info
+        self.time_diff = time_diff
+        self.transformation = None
+        self.delta_x = delta_x
+        self.delta_y = delta_y
+
+    def vehicle_frame(self):
+        return self.veh_frame
+
+    def infrastructure_frame(self):
+        return self.inf_frame
+
+    def proc_transformation(self):
+        # self.transformation["infrastructure_image"]["world"]
+        # read vehicle to world
+        # read infrastructure to novaltel
+        # read novaltel to world
+        # compute inv
+        # compose
+        pass
+
+    def transform(self, from_coord="", to_coord=""):
+        """
+        This function serves to calculate the Transformation Matrix from 'from_coord' to 'to_coord'
+        coord_list=['Infrastructure_image','Infrastructure_camera','Infrastructure_lidar',
+                       'world', 'Vehicle_image','Vehicle_camera','Vehicle_lidar',
+                       'Vehicle_novatel']
+        Args:
+            from_coord(str): element in the coord_list
+            to_coord(str):  element in coord_list
+        Return:
+            Transformation_Matrix: Transformation Matrix from 'from_coord' to 'to_coord'
+        """
+        trans = Coord_transformation_v2(
+            from_coord, to_coord, self.path, self.inf_frame["frame_id"], self.veh_frame["frame_id"], self.delta_x, self.delta_y
+        )
         return trans
