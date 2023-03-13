@@ -14,8 +14,9 @@ we open source the OpenDAIRV2X, towards serving VICAD research community.
 ![image](resources/deployment-visual.png)
 
 ## News
-* [2022.11] 🔥 We are running the first [VIC3D Object Detection challenge](https://aistudio.baidu.com/aistudio/competition/detail/522/0/introduction). 
-* [2022.07] We release the OpenDAIRV2X codebase v1.0.0.
+* [2022.03] We have supported feature fusion method [FFNET](https://github.com/haibao-yu/FFNet-VIC3D).
+* [2022.11] We have held the first [VIC3D Object Detection challenge](https://aistudio.baidu.com/aistudio/competition/detail/522/0/introduction). 
+* [2022.07] We have released the OpenDAIRV2X codebase v1.0.0.
   The current version can faciliate the researchers to use the DAIR-V2X dataset and reproduce the benchmarks.
 * [2022.03] Our Paper "DAIR-V2X: A Large-Scale Dataset for Vehicle-Infrastructure Cooperative 3D Object Detection" has been accepted by CVPR2022.
   Arxiv version could be seen [here](https://arxiv.org/abs/2204.05575).
@@ -40,7 +41,7 @@ we open source the OpenDAIRV2X, towards serving VICAD research community.
   It will directly support different fusion methods including early fusion/feature fusion/late fusion.
   Now it supports early fusion and late fusion.
 - [x] Early Fusion
-- [ ] Feature Fusion
+- [x] Early Fusion
 - [x] Late Fusion
   
 - **Support multi-modality/single-modality detectors for VIC3D**
