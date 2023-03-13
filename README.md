@@ -116,12 +116,23 @@ This project is not possible without the following codebases.
 If you find this project useful in your research, please consider cite:
 
 ```
-@inproceedings{yu2022dairv2x,
-    title={DAIR-V2X: A Large-Scale Dataset for Vehicle-Infrastructure Cooperative 3D Object Detection},
-    author={Yu, Haibao and Luo, Yizhen and Shu, Mao and Huo, Yiyi and Yang, Zebang and Shi, Yifeng and Guo, Zhenglong and Li, Hanyu and Hu, Xing and Yuan, Jirui and Nie, Zaiqing},
-    booktitle={IEEE/CVF Conf.~on Computer Vision and Pattern Recognition (CVPR)},
-    month = jun,
-    year={2022}
+@inproceedings{yu2023v2x,
+  title={V2X-Seq: A large-scale sequential dataset for vehicle-infrastructure cooperative perception and forecasting},
+  author={Yu, Haibao and Yang, Wenxian and Ruan, Hongzhi and Yang, Zhenwei and Tang, Yingjuan and Gao, Xu and Hao, Xin and Shi, Yifeng and Pan, Yifeng and Sun, Ning and Song, Juan and Yuan, Jirui and Luo, Ping and Nie, Zaiqing},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={},
+  year={2023}
+}
+```
+
+
+```
+@inproceedings{yu2022dair,
+  title={Dair-v2x: A large-scale dataset for vehicle-infrastructure cooperative 3d object detection},
+  author={Yu, Haibao and Luo, Yizhen and Shu, Mao and Huo, Yiyi and Yang, Zebang and Shi, Yifeng and Guo, Zhenglong and Li, Hanyu and Hu, Xing and Yuan, Jirui and others},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={21361--21370},
+  year={2022}
 }
 ```
 
