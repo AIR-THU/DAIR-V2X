@@ -14,7 +14,7 @@ we open source the OpenDAIRV2X, towards serving VICAD research community.
 ![image](resources/deployment-visual.png)
 
 ## News
-* [2022.03] Our newer dataset V2X-Seq has been accepted by CVPR2023. Congratulations! We will release the dataset sooner.
+* [2022.03] Our new dataset "V2X-Seq: A Large-Scale Sequential Dataset for Vehicle-Infrastructure Cooperative Perception and Forecasting" has been accepted by CVPR2023. Congratulations! We will release the dataset sooner.
 * [2022.03] We have supported feature fusion method [FFNET](https://github.com/haibao-yu/FFNet-VIC3D).
 * [2022.11] We have held the first [VIC3D Object Detection challenge](https://aistudio.baidu.com/aistudio/competition/detail/522/0/introduction). 
 * [2022.07] We have released the OpenDAIRV2X codebase v1.0.0.
