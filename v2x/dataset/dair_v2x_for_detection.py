@@ -227,7 +227,7 @@ class VICSyncDataset(VICDataset):
 
 
 class VICAsyncDataset(VICDataset):
-    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None):
+    def __init__(self, path, args, split="train", sensortype="lidar", extended_range=None, val_data_path=""):
         super().__init__(path, args, split, sensortype, extended_range)
         self.k = args.k
         self.async_data = []
