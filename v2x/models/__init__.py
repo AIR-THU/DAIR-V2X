@@ -13,4 +13,6 @@ SUPPROTED_MODELS = {
     "early_fusion": EarlyFusion,
     "veh_only": VehOnly,
     "inf_only": InfOnly,
+    "feature_fusion":FeatureFusion,
+    "feature_flow":FeatureFlow
 }
