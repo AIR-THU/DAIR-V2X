@@ -291,4 +291,4 @@ class VICFrameV2(Frame):
         trans = Coord_transformation_v2(
             from_coord, to_coord, self.path, self.inf_frame["frame_id"], self.veh_frame["frame_id"], self.delta_x, self.delta_y
         )
-        return 
+        return trans
