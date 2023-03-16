@@ -18,7 +18,7 @@ def id_to_str(id, digits=6):
 
 def mkdir(path):
     if not osp.exists(path):
-        os.system("mkdir " + path)
+        os.makedirs(path)
 
 
 def id_cmp(x, y):
