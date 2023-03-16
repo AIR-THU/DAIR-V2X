@@ -11,7 +11,7 @@ python eval.py \
   --input $DATA \
   --output $OUTPUT \
   --model feature_fusion \
-  --dataset vic-sync \
+  --dataset vic-sync-v2 \
   --split $SPLIT \
   --split-data-path $SPLIT_DATA_PATH \
   --veh-config-path $VEHICLE_CONFIG_NAME \
