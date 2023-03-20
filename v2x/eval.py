@@ -105,5 +105,6 @@ if __name__ == "__main__":
         ### Patch for FFNet evaluation ###
         if args.model =='feature_flow':
             model.model.data_root = args.input
+            model.model.test_mode = args.test_mode
         #############################
         eval_vic(args, dataset, model, evaluator)
