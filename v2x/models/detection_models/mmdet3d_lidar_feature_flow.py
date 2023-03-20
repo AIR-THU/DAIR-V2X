@@ -157,6 +157,9 @@ class FeatureFlow(BaseModel):
     def __init__(self, args,pipe):
         super().__init__()
         # self.model = LateFusionVeh(args)
+        if osp.exists(args.output):
+            import shutil
+            shutil.rmtree(args.output)
         self.args = args
         self.pipe=pipe
         self.model = init_model(
