@@ -165,6 +165,9 @@ class FeatureFlow(BaseModel):
                 device=self.args.device,
          )
         # self.model.flownet_init()
+        if osp.exists(args.output):
+            import shutil
+            shutil.rmtree(args.output)
         mkdir(args.output)
         mkdir(osp.join(args.output, "inf"))
         mkdir(osp.join(args.output, "veh"))

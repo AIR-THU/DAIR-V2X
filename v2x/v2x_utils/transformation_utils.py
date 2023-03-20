@@ -415,7 +415,7 @@ class Coord_transformation_v2(object):
             os.path.join(path_all["path_root"], path_all["path_lidar2novatel"])
         )
         rotationB2C, translationB2C = self.reverse(rotation, translation)
-        translationB2C = translationB2C + np.array([self.delta_x, self.delta_y, 0]).reshape(3, 1)
+        # translationB2C = translationB2C + np.array([self.delta_x, self.delta_y, 0]).reshape(3, 1)
         new_rotationA2C, new_translationA2C = self.muilt_coord(rotationA2B, translationA2B, rotationB2C, translationB2C)
         return new_rotationA2C, new_translationA2C
 
@@ -436,6 +436,7 @@ class Coord_transformation_v2(object):
         )
         rotationB2C, translationB2C = self.Coord_world2vehicel_lidar(path_all)
         new_rotationA2C, new_translationA2C = self.muilt_coord(rotationA2B, translationA2B, rotationB2C, translationB2C)
+        new_translationA2C = new_translationA2C + np.array([self.delta_x, self.delta_y, 0]).reshape(3, 1)
 
         return new_rotationA2C, new_translationA2C
 

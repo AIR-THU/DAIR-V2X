@@ -48,3 +48,4 @@ def add_arguments(parser):
     parser.add_argument("--sensortype", type=str, default="lidar")
     parser.add_argument("--eval-single", action="store_true")
     parser.add_argument("--val-data-path",  type=str, default="", help="Help evaluate feature flow net")
+    parser.add_argument("--test-mode",  type=str, default="FlowPred", help="Feature Flow Net mode: {'FlowPred', 'OriginFeat', 'Async'}")
