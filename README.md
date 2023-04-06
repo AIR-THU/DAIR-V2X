@@ -108,7 +108,7 @@ If you find this project useful in your research, please consider cite:
 ```
 @inproceedings{dair-v2x,
   title={Dair-v2x: A large-scale dataset for vehicle-infrastructure cooperative 3d object detection},
-  author={Yu, Haibao and Luo, Yizhen and Shu, Mao and Huo, Yiyi and Yang, Zebang and Shi, Yifeng and Guo, Zhenglong and Li, Hanyu and Hu, Xing and Yuan, Jirui and others},
+  author={Yu, Haibao and Luo, Yizhen and Shu, Mao and Huo, Yiyi and Yang, Zebang and Shi, Yifeng and Guo, Zhenglong and Li, Hanyu and Hu, Xing and Yuan, Jirui and Nie, Zaiqing},
   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
   pages={21361--21370},
   year={2022}
