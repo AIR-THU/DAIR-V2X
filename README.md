@@ -75,13 +75,10 @@ Part of the VIC3D detection benchmarks based on DAIR-V2X-C dataset:
 
 Part of the VIC3D detection and tracking benchmarks based on V2X-Seq-SPD:
 
-| Modality | Fusion      | Model       | Dataset      | AP 3D (Iou=0.5) | AP BEV (Iou=0.5) | MOTA   | MOTP   | AMOTA  | AMOTP  | IDs | AB(Byte) | 
-|----------|-------------|-------------|--------------|-----------------|------------------|--------|--------|--------|--------|-----|----------|-------------------------------------------------------------------------------------------------|
-| Image    | Veh Only    | ImvoxelNet  | VIC-Sync-SPD | 8.55            | 10.32            | 10.19 | 57.83 | 1.36 | 14.75 | 4   |          | 
-| Image    | Late Fusion | ImvoxelNet  | VIC-Sync-SPD | 17.31           | 22.53            | 21.81 | 56.67 | 6.22 | 25.24 | 47  | 3300     | 
-
----
-
+| Modality | Fusion      | Model       | Dataset      | AP 3D (Iou=0.5) | AP BEV (Iou=0.5) | MOTA   | MOTP   | AMOTA  | AMOTP  | IDs | AB(Byte) |                                                                                        
+|----------|-------------|-------------|--------------|-----------------|------------------|--------|--------|--------|--------|-----|----------|
+| Image    | Veh Only    | ImvoxelNet  | VIC-Sync-SPD | 8.55            | 10.32            | 10.19 | 57.83 | 1.36 | 14.75 | 4   |          |
+| Image    | Late Fusion | ImvoxelNet  | VIC-Sync-SPD | 17.31           | 22.53            | 21.81 | 56.67 | 6.22 | 25.24 | 47  | 3300     |
 
 
 ## TODO List <a name="TODO List"></a>
