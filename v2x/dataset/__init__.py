@@ -6,4 +6,8 @@ SUPPROTED_DATASETS = {
     "dair-v2x-i": DAIRV2XI,
     "vic-sync": VICSyncDataset,
     "vic-async": VICAsyncDataset,
+    "dair-v2x-v-spd": DAIRV2XVSPD,
+    "dair-v2x-i-spd": DAIRV2XISPD,
+    "vic-sync-spd": VICSyncDatasetSPD,
+    "vic-async-spd": VICAsyncDatasetSPD,
 }

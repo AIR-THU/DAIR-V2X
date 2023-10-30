@@ -1,5 +1,11 @@
 ## Visualization tutorial
 
+### visualization for spd
+
+In SPD, we utilize [SUSTechPOINTS](https://github.com/naurril/SUSTechPOINTS) as the visualization tool for point cloud 3D bounding boxes and tracking IDS. SUSTechPOINTS is a Portable 3D Point Cloud Interactive Annotation Platform System. We offer a tool for converting labels from dair-v2x to SUS. For more details, please refer to [gen_SUS_label](../tools/visualize/gen_SUS_label.py) 
+
+
+### visualization for vic3d
 We provide the tools to visualize the 3d label in images and point clouds, and visualize the prediction results.
 
 #### visualize 3d label in image

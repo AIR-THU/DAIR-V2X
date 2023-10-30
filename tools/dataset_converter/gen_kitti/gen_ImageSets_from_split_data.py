@@ -1,5 +1,5 @@
 import os
-from .utils import read_json, mkdir_p, write_txt
+from tools.dataset_converter.utils import read_json, mkdir_p, write_txt
 
 
 def gen_ImageSet_from_split_data(ImageSets_path, split_data_path, sensor_view="vehicle"):

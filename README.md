@@ -26,12 +26,14 @@
 
 ## Highlights <a name="high"></a>
 - DAIR-V2X: The first real-world dataset for research on vehicle-to-everything autonomous driving. It comprises a total of 71,254 frames of image data and 71,254 frames of point cloud data.
+- V2X-Seq:  The first large-scale, real-world, and sequential V2X dataset, which includes data frames, trajectories, vector maps, and traffic lights captured from natural scenery.  V2X-Seq comprises two parts: V2X-Seq-SPD (Sequential Perception Dataset), which includes more than 15,000 frames captured from 95 scenarios; V2X-Seq-TFD (Trajectory Forecasting Dataset), which contains about 80,000 infrastructure-view scenarios, 80,000 vehicle-view scenarios, and 50,000 cooperative-view scenarios captured from 28 intersections' areas, covering 672 hours of data.
 - OpenDAIR-V2X: An open-sourced framework for supporting the research on  vehicle-to-everything autonomous driving.
 
 ## News <a name="news"></a>
-
+* [2023.09] 🔥 We have released the code for [V2X-Seq-SPD](https://github.com/AIR-THU/DAIR-V2X) and [V2X-Seq-TFD](https://github.com/AIR-THU/DAIR-V2X-Seq).
+* [2023.05] 🔥 V2X-Seq dataset is availale [here](https://thudair.baai.ac.cn/index). It can be unlimitedly downloaded within mainland China. Example dataset can be downloaded directly.
 * [2023.03] 🔥 Our new dataset "V2X-Seq: A Large-Scale Sequential Dataset for Vehicle-Infrastructure Cooperative Perception and Forecasting" has been accepted by CVPR2023. Congratulations! We will release the dataset sooner. Please follow [DAIR-V2X-Seq](https://github.com/AIR-THU/DAIR-V2X-Seq) for the latest news.
-* [2023.03] 🔥 We have released training code for our [FFNET](https://github.com/haibao-yu/FFNet-VIC3D), and our OpenDAIRV2X now supports evaluating [FFNET](https://github.com/haibao-yu/FFNet-VIC3D).
+* [2023.03] We have released training code for our [FFNET](https://github.com/haibao-yu/FFNet-VIC3D), and our OpenDAIRV2X now supports evaluating [FFNET](https://github.com/haibao-yu/FFNet-VIC3D).
 * [2022.11] We have held the first [VIC3D Object Detection challenge](https://aistudio.baidu.com/aistudio/competition/detail/522/0/introduction). 
 * [2022.07] We have released the OpenDAIRV2X codebase v1.0.0.
   The current version can faciliate the researchers to use the DAIR-V2X dataset and reproduce the benchmarks.
@@ -44,51 +46,21 @@
  - [DAIR-V2X-I](https://thudair.baai.ac.cn/roadtest)
  - [DAIR-V2X-V](https://thudair.baai.ac.cn/cartest)
  - [DAIR-V2X-C](https://thudair.baai.ac.cn/coop-forecast)
+ - [V2X-Seq-SPD](https://thudair.baai.ac.cn/coop-forecast)
+ - [V2X-Seq-TFD](https://thudair.baai.ac.cn/cooplocus)
+ - V2X-Seq-SPD-Example: [google_drive_link](https://drive.google.com/file/d/1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY/view?usp=drive_link)
+ - V2X-Seq-TFD-Example: [google_drive_link](https://drive.google.com/file/d/1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY/view?usp=drive_link)
 
 ## Getting Started <a name="start"></a>
-Please refer to [getting_started.md](docs/get_started.md) for Installation, Evaluation, Benchmark and Training etc for VIC3D.
+Please refer to [getting_started.md](docs/get_started.md) for the usage and benchmarks reproduction of DAIR-V2X dataset.
 
-## Major Features <a name="features"></a>
-
-- **Support Train/Evaluation for VIC3D**
-
-  It will directly support model training and evaluation for VIC3D. 
-  Now the model inference and model training are mainly based on MMDetection3D, which is not quite convenient to carry the VICAD research.
-  
-- [x] Evaluation (Model inference is based on MMDetection3D)
-- [x] Training based on MMDetection3D
-- [ ] Direct Evaluation with DAIR-V2X Framework
-- [ ] Direct Training with DAIR-V2X Framework
-
-
-- **Support different fusion methods for VIC3D**
-  
-  It will directly support different fusion methods including early fusion/feature fusion/late fusion.
-  Now it supports early fusion and late fusion.
-- [x] Early Fusion
-- [x] Early Fusion
-- [x] Late Fusion
-  
-- **Support multi-modality/single-modality detectors for VIC3D**
-  
-  It will directly  support different modaility detectors including image-modality detector, pointcloud-modality detector and image-pointcloud fusion detector. 
-  Now it supports image-modality detector ImvoxelNet, pointcloud-modality detector PointPillars.
-- [x] Image-modality
-- [x] Pointcloud-modality
-- [ ] Multi-modality
-
-
-- **Support Cooperation-view/single-view detectors for VIC3D**
-  
-  It directly supports different view's detectors for VIC3D, including infrastructure-view detector, 
-  vehicle-view detector, vehicle-infrastrucure cooperation-view detector.
-- [x] Infrastructure-view
-- [x] Vehicle-view
-- [x] Cooperation-view
+Please refer to [get_started_spd.md](docs/get_started_spd.md) for the usage and benchmarks reproduction of V2X-Seq-SPD dataset.
 
 ## Benchmark <a name="benchmark"></a>
 
-You can find more benchmark in [SV3D-Veh](configs/sv3d-veh), [SV3D-Inf](configs/sv3d-inf), and [VIC3D](configs/vic3d). We provide part of the VIC3D Benchmark in following table.
+You can find more benchmark in [SV3D-Veh](configs/sv3d-veh), [SV3D-Inf](configs/sv3d-inf), [VIC3D](configs/vic3d) and [VIC3D-SPD](configs/vic3d-spd/). 
+
+Part of the VIC3D detection benchmarks based on DAIR-V2X-C dataset:
 
 | Modality  | Fusion  | Model      | Dataset   | AP-3D (IoU=0.5)  |        |        |         | AP-BEV (IoU=0.5)  |       |        |         |   AB   |
 | :-------: | :-----: | :--------: | :-------: | :----: | :----: | :----: | :-----: | :-----: | :---: | :----: | :-----: | :----: |
@@ -101,11 +73,37 @@ You can find more benchmark in [SV3D-Veh](configs/sv3d-veh), [SV3D-Inf](configs/
 |       | Late-Fusion | PointPillars |VIC-Async-2| 52.43 | 51.13 | 67.09  | 49.86   | 58.10   | 57.23 | 70.86  | 55.78   | 478.01 |
 |       | TCLF        | PointPillars |VIC-Async-2| 53.37 | 52.41 | 67.33  | 50.87   | 59.17   | 58.25 | 71.20  | 57.43   | 897.91 |
 
+Part of the VIC3D detection and tracking benchmarks based on V2X-Seq-SPD:
+
+| Modality | Fusion      | Model       | Dataset      | AP 3D (Iou=0.5) | AP BEV (Iou=0.5) | MOTA   | MOTP   | AMOTA  | AMOTP  | IDs | AB(Byte) | 
+|----------|-------------|-------------|--------------|-----------------|------------------|--------|--------|--------|--------|-----|----------|-------------------------------------------------------------------------------------------------|
+| Image    | Veh Only    | ImvoxelNet  | VIC-Sync-SPD | 8.55            | 10.32            | 10.19 | 57.83 | 1.36 | 14.75 | 4   |          | 
+| Image    | Late Fusion | ImvoxelNet  | VIC-Sync-SPD | 17.31           | 22.53            | 21.81 | 56.67 | 6.22 | 25.24 | 47  | 3300     | 
+
+---
+
+
+
+## TODO List <a name="TODO List"></a>
+- [x] Dataset Release
+- [x] Dataset API
+- [x] Evaluation Code
+- [x] All detection benchmarks based on DAIR-V2X dataset
+- [x] Benchmarks for detection and tracking tasks with different fusion strategies for Image based on V2X-Seq-SPD dataset
+- [ ] All benchmarks for detection and tracking tasks based on V2X-Seq-SPD dataset
+
 
 ## Citation <a name="citation"></a>
-
-If you find this project useful in your research, please consider cite:
+Please consider citing our paper if the project helps your research with the following BibTex:
+```bibtex
+@inproceedings{v2x-seq,
+  title={V2X-Seq: A large-scale sequential dataset for vehicle-infrastructure cooperative perception and forecasting},
+  author={Yu, Haibao and Yang, Wenxian and Ruan, Hongzhi and Yang, Zhenwei and Tang, Yingjuan and Gao, Xu and Hao, Xin and Shi, Yifeng and Pan, Yifeng and Sun, Ning and Song, Juan and Yuan, Jirui and Luo, Ping and Nie, Zaiqing},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2023},
+}
 ```
+```bibtex
 @inproceedings{dair-v2x,
   title={Dair-v2x: A large-scale dataset for vehicle-infrastructure cooperative 3d object detection},
   author={Yu, Haibao and Luo, Yizhen and Shu, Mao and Huo, Yiyi and Yang, Zebang and Shi, Yifeng and Guo, Zhenglong and Li, Hanyu and Hu, Xing and Yuan, Jirui and Nie, Zaiqing},
@@ -127,3 +125,5 @@ If any questions and suggenstations, please email to dair@air.tsinghua.edu.cn.
 - [FFNET](https://github.com/haibao-yu/FFNet-VIC3D) (:rocket:Ours!)
 - [mmdet3d](https://github.com/open-mmlab/mmdetection3d)
 - [pypcd](https://github.com/dimatura/pypcd)
+- [AB3DMOT](https://github.com/xinshuoweng/AB3DMOT)
+
