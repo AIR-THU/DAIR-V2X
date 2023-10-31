@@ -63,6 +63,13 @@ def build_path_to_info(prefix, data, sensortype="lidar"):
             path2info[path] = elem
     return path2info
 
+def build_frame_to_info(data):
+    frame2info = {}
+    for elem in data:
+        if elem["frame_id"] == "":
+            continue
+        frame2info[elem["frame_id"]] = elem
+    return frame2info
 
 class DAIRV2XDataset(Dataset):
     def __init__(self, path, args, split="train", extended_range=None):

@@ -24,7 +24,7 @@ for VICFrame, label, filt in dataset:
 You can access to the infrastructure frame class or vehicle frame class by:
 ```
 VICFrame.inf_frame    # The infrastructure frame, member of InfFrame
-VICFrame.veh_frame    # The vehicle frame, member of InfFrame
+VICFrame.veh_frame    # The vehicle frame, member of VehFrame
 ```
 We provide `Transform` class carrying out the coordinate transformation you need:
 ```
@@ -74,9 +74,9 @@ You can also access the frame values by their keys which are listed below:
 | `calib_camera_intrisinc_path`      | path of the camera intrinsics file                    |
 
 
-#### VICFrame.veh_frame
+#### VehFrame
 
-`veh_frame` refers to the vehicle frame class. We provide APIs which loads the point cloud (`inf_frame.point_cloud(data_format="array"/"file"/"tensor")`) or image (`inf_frame.image(data_format="array"/"file"/"tensor")`) of this frame. 
+`VehFrame` refers to the vehicle frame class. We provide APIs which loads the point cloud (`inf_frame.point_cloud(data_format="array"/"file"/"tensor")`) or image (`inf_frame.image(data_format="array"/"file"/"tensor")`) of this frame. 
 You can also access the frame values by their keys listed below:
 
 | Key                             | Value                             |

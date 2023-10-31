@@ -2,7 +2,7 @@ import os
 import numpy as np
 import argparse
 from pypcd import pypcd
-from gen_kitti.utils import read_json, write_json, pcd2bin
+from tools.dataset_converter.utils import read_json, write_json, pcd2bin
 import json
 
 

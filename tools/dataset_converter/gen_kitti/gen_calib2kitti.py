@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from .utils import mkdir_p, read_json, get_files_path
+from tools.dataset_converter.utils import mkdir_p, read_json, get_files_path
 
 
 def convert_calib_v2x_to_kitti(cam_D, cam_K, t_velo2cam, r_velo2cam):
