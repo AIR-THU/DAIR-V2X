@@ -19,6 +19,8 @@ name2id = {
     "unknown_movable": 3,
 }
 
+a = 1
+
 superclass = {
     -1: "ignore",
     0: "pedestrian",
