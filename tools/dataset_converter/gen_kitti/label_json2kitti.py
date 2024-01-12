@@ -1,5 +1,5 @@
 import os
-from .utils import mkdir_p, read_json, get_files_path
+from tools.dataset_converter.utils import mkdir_p, read_json, get_files_path
 
 
 def write_kitti_in_txt(my_json, path_txt):

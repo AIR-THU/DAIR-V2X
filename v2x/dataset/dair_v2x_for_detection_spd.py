@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from base_dataset import DAIRV2XDataset, get_annos, build_frame_to_info
-from dataset.dataset_utils import load_json, InfFrameV2, VehFrameV2, VICFrameV2, Label
+from dataset.dataset_utils import load_json, InfFrameSPD, VehFrameSPD, VICFrameSPD, Label
 from v2x_utils import Filter, RectFilter, id_cmp, id_to_str, get_trans, box_translation
 
 
@@ -25,7 +25,7 @@ class DAIRV2XIV2(DAIRV2XDataset):
             gt_label["camera"] = Label(osp.join(path, "infrastructure-side", elem["label_camera_std_path"]), filt)
             gt_label["lidar"] = Label(osp.join(path, "infrastructure-side", elem["label_lidar_std_path"]), filt)
 
-            self.data.append((InfFrameV2(path, elem), gt_label, filt))
+            self.data.append((InfFrameSPD(path, elem), gt_label, filt))
 
             if sensortype == "camera":
                 inf_frame = self.inf_frame2info[elem["frame_id"]]
@@ -75,7 +75,7 @@ class DAIRV2XVV2(DAIRV2XDataset):
             for view in ["camera", "lidar"]:
                 gt_label[view] = Label(osp.join(path, "vehicle-side", elem["label_" + view + "_std_path"]), filt)
 
-            self.data.append((VehFrameV2(path, elem), gt_label, filt))
+            self.data.append((VehFrameSPD(path, elem), gt_label, filt))
 
             if sensortype == "camera":
                 veh_frame = self.veh_frame2info[elem["frame_id"]]
@@ -138,8 +138,8 @@ class VICDatasetV2(DAIRV2XDataset):
                 get_annos(path, "infrastructure-side", inf_frame, "camera")
                 get_annos(path, "vehicle-side", veh_frame, "camera")
 
-            inf_frame = InfFrameV2(path + "/infrastructure-side/", inf_frame)
-            veh_frame = VehFrameV2(path + "/vehicle-side/", veh_frame)
+            inf_frame = InfFrameSPD(path + "/infrastructure-side/", inf_frame)
+            veh_frame = VehFrameSPD(path + "/vehicle-side/", veh_frame)
             if not inf_frame["sequence_id"] in self.inf_frames:
                 self.inf_frames[inf_frame["sequence_id"]] = [inf_frame]
             else:
@@ -148,7 +148,7 @@ class VICDatasetV2(DAIRV2XDataset):
                 self.veh_frames[veh_frame["sequence_id"]] = [veh_frame]
             else:
                 self.veh_frames[veh_frame["sequence_id"]].append(veh_frame)
-            vic_frame = VICFrameV2(
+            vic_frame = VICFrameSPD(
                 path, elem, veh_frame, inf_frame, 0, elem["system_error_offset"]["delta_x"], elem["system_error_offset"]["delta_y"]
             )
 
@@ -222,7 +222,7 @@ class VICAsyncDatasetV2(VICDatasetV2):
             if inf_frame is None:
                 continue
             else:
-                new_vic_frame = VICFrameV2(path, {}, vic_frame.veh_frame, inf_frame, delta_t, vic_frame.delta_x, vic_frame.delta_y)
+                new_vic_frame = VICFrameSPD(path, {}, vic_frame.veh_frame, inf_frame, delta_t, vic_frame.delta_x, vic_frame.delta_y)
                 self.async_data.append((new_vic_frame, coop_labels, filt))
 
         logger.info("VIC-Async {} dataset, overall {} frames".format(split, len(self.async_data)))
@@ -243,7 +243,7 @@ class VICAsyncDatasetV2(VICDatasetV2):
                 return None, None
             prev = self.inf_frame2info[id_to_str(int(index) - self.k)]
             return (
-                InfFrameV2(self.path + "/infrastructure-side/", prev),
+                InfFrameSPD(self.path + "/infrastructure-side/", prev),
                 (int(cur["pointcloud_timestamp"]) - int(prev["pointcloud_timestamp"])) / 1000.0,
             )
         elif sensortype == "camera":
@@ -253,7 +253,7 @@ class VICAsyncDatasetV2(VICDatasetV2):
             prev = self.inf_frame2info[id_to_str(int(index) - self.k)]
             get_annos(self.path, "infrastructure-side", prev, "camera")
             return (
-                InfFrameV2(self.path + "/infrastructure-side/", prev),
+                InfFrameSPD(self.path + "/infrastructure-side/", prev),
                 (int(cur["image_timestamp"]) - int(prev["image_timestamp"])) / 1000.0,
             )
 

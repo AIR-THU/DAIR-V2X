@@ -4,10 +4,7 @@ from abc import ABC, abstractmethod
 import torch
 
 from dataset.dataset_utils import read_pcd, read_jpg, load_json
-from v2x_utils.transformation_utils import Coord_transformation, Coord_transformation_v2
-from v2x_utils import get_trans, box_translation
-import json
-import numpy as np
+from v2x_utils.transformation_utils import Coord_transformation, Coord_transformation_spd
 
 
 class Frame(dict, ABC):
@@ -153,7 +150,8 @@ class VICFrame(Frame):
         trans = Coord_transformation(from_coord, to_coord, self.path, infra_name, veh_name)
         return trans
 
-class VehFrameV2(Frame):
+
+class VehFrameSPD(Frame):
     def __init__(self, path, veh_dict, tmp_key="tmps", delta_x=0, delta_y=0):
         super().__init__(path, veh_dict)
         self.id = {}
@@ -199,7 +197,7 @@ class VehFrameV2(Frame):
             return torch.tensor(image_array)
 
 
-class InfFrameV2(Frame):
+class InfFrameSPD(Frame):
     def __init__(self, path, inf_dict, tmp_key="tmps", delta_x=0, delta_y=0):
         super().__init__(path, inf_dict)
         self.id = {}
@@ -246,11 +244,11 @@ class InfFrameV2(Frame):
             Transformation_Matrix: Transformation Matrix from 'from_coord' to 'to_coord'
         """
         inf_name = self.get("frame_id")
-        trans = Coord_transformation_v2(from_coord, to_coord, "/".join(self.path.split("/")[:-2]), inf_name, "", self.delta_x, self.delta_y)
+        trans = Coord_transformation_spd(from_coord, to_coord, "/".join(self.path.split("/")[:-2]), inf_name, "", self.delta_x, self.delta_y)
         return trans
 
 
-class VICFrameV2(Frame):
+class VICFrameSPD(Frame):
     def __init__(self, path, coop_dict, veh_frame_info, inf_frame_info, time_diff, delta_x=0, delta_y=0):
         # TODO: build vehicle frame and infrastructure frame
         super().__init__(path, coop_dict)
@@ -288,7 +286,7 @@ class VICFrameV2(Frame):
         Return:
             Transformation_Matrix: Transformation Matrix from 'from_coord' to 'to_coord'
         """
-        trans = Coord_transformation_v2(
+        trans = Coord_transformation_spd(
             from_coord, to_coord, self.path, self.inf_frame["frame_id"], self.veh_frame["frame_id"], self.delta_x, self.delta_y
         )
         return trans

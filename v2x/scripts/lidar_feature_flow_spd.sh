@@ -15,7 +15,7 @@ python eval.py \
   --output $OUTPUT \
   --model feature_flow \
   --test-mode $4 \
-  --dataset vic-sync-v2 \
+  --dataset vic-sync-spd \
   --val-data-path $VAL_DATA_PATH \
   --veh-config-path $VEHICLE_CONFIG_NAME \
   --veh-model-path $VEHICLE_MODEL_PATH \

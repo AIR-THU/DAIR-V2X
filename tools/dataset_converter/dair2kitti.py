@@ -1,10 +1,10 @@
 import argparse
 import os
-from gen_kitti.label_lidarcoord_to_cameracoord import gen_lidar2cam
-from gen_kitti.label_json2kitti import json2kitti, rewrite_label, label_filter
-from gen_kitti.gen_calib2kitti import gen_calib2kitti
-from gen_kitti.gen_ImageSets_from_split_data import gen_ImageSet_from_split_data
-from gen_kitti.utils import pcd2bin
+from tools.dataset_converter.gen_kitti.label_lidarcoord_to_cameracoord import gen_lidar2cam
+from tools.dataset_converter.gen_kitti.label_json2kitti import json2kitti, rewrite_label, label_filter
+from tools.dataset_converter.gen_kitti.gen_calib2kitti import gen_calib2kitti
+from tools.dataset_converter.gen_kitti.gen_ImageSets_from_split_data import gen_ImageSet_from_split_data
+from tools.dataset_converter.utils import pcd2bin
 
 parser = argparse.ArgumentParser("Generate the Kitti Format Data")
 parser.add_argument("--source-root", type=str, default="data/single-vehicle-side", help="Raw data root about DAIR-V2X.")

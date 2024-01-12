@@ -3,7 +3,7 @@ import numpy as np
 from tqdm import tqdm
 import math
 import argparse
-from gen_kitti.utils import read_json, write_json, mkdir_p
+from tools.dataset_converter.utils import read_json, write_json, mkdir_p
 
 """
             virtuallidar2world
