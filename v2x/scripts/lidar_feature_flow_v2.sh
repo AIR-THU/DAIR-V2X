@@ -2,11 +2,11 @@ FFNet_workdir=$2 # '/home/yuhaibao/FFNet-VIC3D'
 export PYTHONPATH=$PYTHONPATH:${FFNet_workdir}
 
 DELAY_K=$3
-DATA=${FFNet_workdir}'/data/v2x-seq/SPD/cooperative-vehicle-infrastructure'
+DATA=${FFNet_workdir}'/data/v2x-seq/V2X-Seq-SPD'
 VAL_DATA_PATH=${FFNet_workdir}'/data/v2x-seq/flow_data_jsons/flow_data_info_val_'${DELAY_K}'.json'
-OUTPUT="../cache/vic-feature-flow"
-VEHICLE_MODEL_PATH=${FFNet_workdir}'/ffnet_work_dir/work_dir_ffnet/ffnet.pth'
-VEHICLE_CONFIG_NAME=${FFNet_workdir}'/ffnet_work_dir/config_ffnet.py'
+OUTPUT="../cache/vic-feature-flow-spd"
+VEHICLE_MODEL_PATH=${FFNet_workdir}'/ffnet_work_dir/work_dir_spd_ffnet-0109-zhenwei-data/epoch_9.pth'
+VEHICLE_CONFIG_NAME=${FFNet_workdir}'/configs/ffnet_spd/config_ffnet.py'
 
 CUDA_VISIBLE_DEVICES=$1 
 
