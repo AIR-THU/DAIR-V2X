@@ -3,8 +3,8 @@ DATA=${FFNet_workdir}'/data/dair-v2x/DAIR-V2X/cooperative-vehicle-infrastructure
 SPLIT=val
 SPLIT_DATA_PATH="../data/split_datas/cooperative-split-data.json"
 OUTPUT="../cache/vic-feature-fusion-baseline"
-VEHICLE_MODEL_PATH=${FFNet_workdir}'/ffnet_work_dir/work_dir_baseline-V1/ffnet_without_prediction.pth'
-VEHICLE_CONFIG_NAME=${FFNet_workdir}'/ffnet_work_dir/config_basemodel.py'
+VEHICLE_MODEL_PATH=${FFNet_workdir}'/ffnet_work_dir/release-checkpoints/ffnet_without_prediction.pth'
+VEHICLE_CONFIG_NAME=${FFNet_workdir}'/configs/ffnet/config_basemodel.py'
 CUDA_VISIBLE_DEVICES=$1 \
 
 python eval.py \

@@ -5,7 +5,7 @@ DELAY_K=$3
 DATA=${FFNet_workdir}'/data/v2x-seq/V2X-Seq-SPD'
 VAL_DATA_PATH=${FFNet_workdir}'/data/v2x-seq/flow_data_jsons/flow_data_info_val_'${DELAY_K}'.json'
 OUTPUT="../cache/vic-feature-flow-spd"
-VEHICLE_MODEL_PATH=${FFNet_workdir}'/ffnet_work_dir/work_dir_spd_ffnet-0109-zhenwei-data/epoch_9.pth'
+VEHICLE_MODEL_PATH=${FFNet_workdir}'/ffnet_work_dir/release-checkpoints/ffnet-v2x-spd.pth'
 VEHICLE_CONFIG_NAME=${FFNet_workdir}'/configs/ffnet_spd/config_ffnet.py'
 
 CUDA_VISIBLE_DEVICES=$1 

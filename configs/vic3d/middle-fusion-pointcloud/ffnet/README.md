@@ -21,7 +21,7 @@ We evaluate the models on DAIR-V2X dataset. For downloading DAIR-V2X dataset, pl
 ### Evaluation
 Download [FFNet](https://github.com/haibao-yu/FFNet-VIC3D), configure the environment as described in its README.
 
- Download [Trainded FFNET Checkpoint](https://drive.google.com/file/d/1eX2wZ7vSxq8y9lAyjHyrmBQ30qNHcFC6/view?usp=sharing) and put this checkpoint under '${Your_FFNet_workdir}/ffnet_work_dir/work_dir_ffnet'.
+ Download [Trainded FFNET Checkpoint](https://drive.google.com/file/d/1eX2wZ7vSxq8y9lAyjHyrmBQ30qNHcFC6/view?usp=sharing) and put this checkpoint under '${Your_FFNet_workdir}/ffnet_work_dir/release-checkpoints'.
 
 Then use the following commands to get the evaluation results.
 

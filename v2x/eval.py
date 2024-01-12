@@ -25,10 +25,15 @@ def eval_vic(args, dataset, model, evaluator):
     idx = -1
     for VICFrame, label, filt in tqdm(dataset):
         idx += 1
-        if idx % 10 != 0:
-            continue
-
-        veh_id = VICFrame.vehicle_frame().get("frame_id")
+        # if idx % 10 != 0:
+        #     continue
+        if 'spd' in args.dataset:
+            veh_id = VICFrame.vehicle_frame().get("frame_id")
+        else:
+            try:
+                veh_id = dataset.data[idx][0]["vehicle_pointcloud_path"].split("/")[-1].replace(".pcd", "")
+            except Exception:
+                veh_id = VICFrame["vehicle_pointcloud_path"].split("/")[-1].replace(".pcd", "")
 
         pred = model(
             VICFrame,
