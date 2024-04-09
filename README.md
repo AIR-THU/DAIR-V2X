@@ -51,7 +51,7 @@
  - [V2X-Seq-TFD](https://thudair.baai.ac.cn/cooplocus)
  - DAIR-V2X-C-Example: [google_drive_link](https://drive.google.com/file/d/1y8bGwI63TEBkDEh2JU_gdV7uidthSnoe/view?usp=drive_link)
  - V2X-Seq-SPD-Example: [google_drive_link](https://drive.google.com/file/d/1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY/view?usp=drive_link)
- - V2X-Seq-TFD-Example: [google_drive_link](https://drive.google.com/file/d/1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY/view?usp=drive_link)
+ - V2X-Seq-TFD-Example: [google_drive_link](https://drive.google.com/file/d/1-Ri92z6rkH14vAOFOx5xhfzvFxBptgAA/view?usp=sharing)
 
 ## Getting Started <a name="start"></a>
 Please refer to [getting_started.md](docs/get_started.md) for the usage and benchmarks reproduction of DAIR-V2X dataset.
