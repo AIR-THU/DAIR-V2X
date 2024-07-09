@@ -81,7 +81,7 @@ def plot_rect3d_on_img(img, num_rects, rect_corners, color=(0, 255, 0), thicknes
     """
     line_indices = ((0, 1), (0, 3), (0, 4), (1, 2), (1, 5), (3, 2), (3, 7), (4, 5), (4, 7), (2, 6), (5, 6), (6, 7))
     for i in range(num_rects):
-        corners = rect_corners[i].astype(np.int)
+        corners = rect_corners[i].astype(int)
 
         for start, end in line_indices:
             radius = 5
