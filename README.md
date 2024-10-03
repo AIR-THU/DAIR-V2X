@@ -30,9 +30,11 @@
 - OpenDAIR-V2X: An open-sourced framework for supporting the research on  vehicle-to-everything autonomous driving.
 
 ## News <a name="news"></a>
-* [2024.04] 🔥 Our [UniV2X](https://arxiv.org/abs/2404.00717) available on arXiv. UniV2X is the first end-to-end framework that unifies all vital modules as well as diverse driving views into a network for cooperative autonomous driving. Code will be [here](https://github.com/AIR-THU/UniV2X).
-* [2024.03] 🔥 Our new Dataset RCooper, a real-world large-scale dataset for roadside cooperative perception, has been accepted by CVPR2024! Please follow [RCooper](https://github.com/AIR-THU/DAIR-RCooper) for the latest news.
-* [2024.01] 🔥 Our [QUEST](https://arxiv.org/abs/2308.01804) has been been accpeted by ICRA2024.
+* [2024.09] 🔥 Our [V2X-Gaph](https://github.com/AIR-THU/V2X-Graph) has been accepted by NeurIPs2024! V2X-Graph. V2X-Graph is the first interpretable and end-to-end learning framework for cooperative motion forecasting.
+* [2024.07] 🔥 Our CTCE[https://arxiv.org/abs/2408.10531] has been accpeted by ITSC2024! CTCE is a novel sequential framework for cooperative perception. 
+* [2024.04] Our [UniV2X](https://arxiv.org/abs/2404.00717) available on arXiv. UniV2X is the first end-to-end framework that unifies all vital modules as well as diverse driving views into a network for cooperative autonomous driving. Code will be [here](https://github.com/AIR-THU/UniV2X).
+* [2024.03] Our new Dataset RCooper, a real-world large-scale dataset for roadside cooperative perception, has been accepted by CVPR2024! Please follow [RCooper](https://github.com/AIR-THU/DAIR-RCooper) for the latest news.
+* [2024.01] Our [QUEST](https://arxiv.org/abs/2308.01804) has been been accpeted by ICRA2024.
 * [2023.10] We have released the code for [V2X-Seq-SPD](https://github.com/AIR-THU/DAIR-V2X) and [V2X-Seq-TFD](https://github.com/AIR-THU/DAIR-V2X-Seq).
 * [2023.09] Our [FFNET](https://github.com/haibao-yu/FFNet-VIC3D) has been accpeted by Neurips2023.
 * [2023.05] V2X-Seq dataset is availale [here](https://thudair.baai.ac.cn/index). It can be unlimitedly downloaded within mainland China. Example dataset can be downloaded directly.
