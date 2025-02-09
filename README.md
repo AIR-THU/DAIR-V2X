@@ -61,6 +61,8 @@
  - V2X-Seq-SPD-Example: [google_drive_link](https://drive.google.com/file/d/1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY/view?usp=drive_link)
  - V2X-Seq-TFD-Example: [google_drive_link](https://drive.google.com/file/d/1-Ri92z6rkH14vAOFOx5xhfzvFxBptgAA/view?usp=sharing)
 
+ Note: We have also provided the dataset at [Public-V2X-Datasets](https://drive.google.com/drive/folders/1gnrw5llXAIxuB9sEKKCm6xTaJ5HQAw2e?usp=sharing).
+
 ## Getting Started <a name="start"></a>
 Please refer to [getting_started.md](docs/get_started.md) for the usage and benchmarks reproduction of DAIR-V2X dataset.
 
