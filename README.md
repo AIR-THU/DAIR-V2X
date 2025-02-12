@@ -40,7 +40,7 @@
 * [2024.01] Our [QUEST](https://arxiv.org/abs/2308.01804) has been been accpeted by ICRA2024.
 * [2023.10] We have released the code for [V2X-Seq-SPD](https://github.com/AIR-THU/DAIR-V2X) and [V2X-Seq-TFD](https://github.com/AIR-THU/DAIR-V2X-Seq).
 * [2023.09] Our [FFNET](https://github.com/haibao-yu/FFNet-VIC3D) has been accpeted by Neurips2023.
-* [2023.05] V2X-Seq dataset is availale [here](https://thudair.baai.ac.cn/index). It can be unlimitedly downloaded within mainland China. Example dataset can be downloaded directly.
+* [2023.05] V2X-Seq dataset is availale [here](https://thudair.baai.ac.cn/index).
 * [2023.03] Our new dataset "V2X-Seq: A Large-Scale Sequential Dataset for Vehicle-Infrastructure Cooperative Perception and Forecasting" has been accepted by CVPR2023. Congratulations! We will release the dataset sooner. Please follow [DAIR-V2X-Seq](https://github.com/AIR-THU/DAIR-V2X-Seq) for the latest news.
 * [2023.03] We have released training code for our [FFNET](https://github.com/haibao-yu/FFNet-VIC3D), and our OpenDAIRV2X now supports evaluating [FFNET](https://github.com/haibao-yu/FFNet-VIC3D).
 * [2022.11] We have held the first [VIC3D Object Detection challenge](https://aistudio.baidu.com/aistudio/competition/detail/522/0/introduction). 
@@ -49,7 +49,6 @@
 * [2022.03] Our Paper "DAIR-V2X: A Large-Scale Dataset for Vehicle-Infrastructure Cooperative 3D Object Detection" has been accepted by CVPR2022.
   Arxiv version could be seen [here](https://arxiv.org/abs/2204.05575).
 * [2022.02] DAIR-V2X dataset is availale [here](https://thudair.baai.ac.cn/index).
-  It can be unlimitedly downloaded within mainland China. 
 
 ## Dataset Download <a name="dataset"></a>
  - [DAIR-V2X-I](https://thudair.baai.ac.cn/roadtest)
